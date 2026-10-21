@@ -46,11 +46,11 @@ Si `workerUrl` en `config.js` está vacío, o abres la página con `?prueba`, la
 
 ## Casos (`data/casos-*.js`)
 
-670 casos escritos para esta herramienta, tomando como referencia los problemas que aparecen en los Forms de todos los centros, pero **sin copiar ninguna respuesta real**. Reglas:
+1,290 casos escritos para esta herramienta, tomando como referencia los problemas que aparecen en los Forms de todos los centros, pero **sin copiar ninguna respuesta real**. Los archivos `casos-samana-*.js` agregan 10 casos más a cada indicador, inspirados en los problemas que reporta DC Samaná (clientes sin dinero en zonas lejanas, mayoristas, botellas explotadas, bajo líquido, perfiles de patana, etc.). Reglas:
 
 - **Nada específico:** sin clientes, negocios, rutas, fichas, placas, códigos, personas ni cifras exactas. Lo único permitido son **nombres de productos** (Presidente, Brahma, Malta Morena…).
 - **Sin repetir:** dentro de cada indicador, cada caso tiene una causa raíz distinta.
-- **Cantidad por uso en Bávaro:** 20 casos en los más usados, 10 en los de uso medio y 5 en los de poco uso.
+- **Cantidad por uso en Bávaro:** 30 casos en los más usados, 20 en los de uso medio y 15 en los de poco uso.
 
 Cada lista usa **el nombre exacto del indicador en el Forms** (sin los espacios del final):
 
@@ -58,7 +58,7 @@ Cada lista usa **el nombre exacto del indicador en el Forms** (sin los espacios 
 - 5XQ: `"5XQ|Indicador"`, por ejemplo `"5XQ|Diferencia de Inventario"`.
 - Los indicadores de 5XQ que son lo mismo que uno de Relatos (por ejemplo "Tiempo medio liberación (TML)") comparten su lista; eso está en `DATOS.igual`, al final de `casos-5xq-2.js`.
 
-Cada caso es una línea con 7 textos: `[1.er porqué, 2.º, 3.º, 4.º, 5.º, causa raíz, acción correctiva]`. Para agregar uno, copia una línea en la lista del indicador y cambia los textos.
+Cada caso es una línea con 7 textos: `[1.er porqué, 2.º, 3.º, 4.º, 5.º, causa raíz, acción correctiva]`. Para agregar uno, copia una línea en la lista del indicador y cambia los textos. Para agregar una tanda nueva sin tocar los archivos existentes, crea otro archivo con `DATOS.agregar("clave", [ ... ])` (como los `casos-samana-*.js`) y agrégalo en `index.html`.
 
 ## Controles al enviar
 
