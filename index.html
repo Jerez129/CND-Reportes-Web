@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Reportes CND</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="barra">
+    <h1>Reportes CND</h1>
+    <span class="centro">DC Bávaro</span>
+    <span id="modo" class="modo" hidden>Modo prueba: no se envía nada</span>
+  </header>
+
+  <main>
+    <nav class="tabs" role="tablist">
+      <button type="button" role="tab" data-form="relatos" aria-selected="true">Relatos de Anomalía</button>
+      <button type="button" role="tab" data-form="x5q" aria-selected="false">5XQ</button>
+    </nav>
+
+    <form id="reporte" novalidate>
+      <section class="tarjeta">
+        <h2>1. Datos del reporte</h2>
+        <div class="grid">
+          <label data-campo="fecha">Fecha
+            <input type="date" name="fecha">
+          </label>
+          <label data-campo="responsable">Responsable
+            <select name="responsable"></select>
+          </label>
+          <label data-campo="supervisor">Supervisor
+            <input type="text" name="supervisor" list="supervisores" autocomplete="off">
+            <datalist id="supervisores"></datalist>
+          </label>
+          <label data-campo="area">Área
+            <select name="area"></select>
+          </label>
+          <label data-campo="indicador">Indicador
+            <select name="indicador"></select>
+          </label>
+          <label data-campo="chofer">Chofer / conductor
+            <input type="text" name="chofer" autocomplete="off">
+          </label>
+          <label data-campo="ruta">Ruta
+            <input type="text" name="ruta" autocomplete="off">
+          </label>
+          <label data-campo="resultadoRuta">Resultado ruta
+            <input type="text" name="resultadoRuta" autocomplete="off">
+          </label>
+          <label data-campo="pregunta">Pregunta <small>(opcional)</small>
+            <input type="text" name="pregunta" autocomplete="off">
+          </label>
+        </div>
+      </section>
+
+      <section class="tarjeta">
+        <h2>2. ¿Qué pasó?</h2>
+        <label data-campo="descripcion"><span id="descEtiqueta">Describe en una línea lo que ocurrió</span>
+          <textarea name="descripcion" rows="2" placeholder="Ej.: el camión esperó 20 min porque no había muelle libre"></textarea>
+        </label>
+        <p class="ayuda">Te propongo los casos guardados que más se parecen. Elige uno y ajústalo a lo que pasó.</p>
+        <div id="sugerencias" class="sugerencias" aria-live="polite"></div>
+        <button type="button" id="verMas" class="secundario" hidden>Ver más casos</button>
+      </section>
+
+      <section class="tarjeta">
+        <h2>3. Análisis (revísalo antes de enviar)</h2>
+        <ol class="porques">
+          <li><input type="text" name="porque0" placeholder="1.er por qué"></li>
+          <li><input type="text" name="porque1" placeholder="2.º por qué"></li>
+          <li><input type="text" name="porque2" placeholder="3.er por qué"></li>
+          <li><input type="text" name="porque3" placeholder="4.º por qué (opcional)"></li>
+          <li><input type="text" name="porque4" placeholder="5.º por qué (opcional)"></li>
+        </ol>
+        <label>Causa raíz
+          <textarea name="causaRaiz" rows="2"></textarea>
+        </label>
+        <label>Acción correctiva
+          <textarea name="accionCorrectiva" rows="2"></textarea>
+        </label>
+        <fieldset data-campo="cronica" class="cronica">
+          <legend>¿Es una anomalía crónica?</legend>
+          <div id="cronicaOpciones"></div>
+        </fieldset>
+      </section>
+
+      <div class="acciones">
+        <p id="estado" class="estado" role="status"></p>
+        <button type="submit" id="enviar">Enviar reporte</button>
+      </div>
+    </form>
+
+    <section id="vistaPrevia" class="tarjeta" hidden>
+      <h2>Lo que se enviaría</h2>
+      <pre id="payload"></pre>
+    </section>
+  </main>
+
+  <script src="config.js"></script>
+  <script src="data/casos-distribucion-1.js"></script>
+  <script src="data/casos-distribucion-2.js"></script>
+  <script src="data/casos-almacen-1.js"></script>
+  <script src="data/casos-almacen-2.js"></script>
+  <script src="data/casos-adf.js"></script>
+  <script src="data/casos-5xq-1.js"></script>
+  <script src="data/casos-5xq-2.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

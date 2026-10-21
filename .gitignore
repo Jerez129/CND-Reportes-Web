@@ -1,0 +1,4 @@
+# Las exportaciones de los Forms tienen datos personales: nunca subirlas
+*.xlsx
+*.xls
+*.csv

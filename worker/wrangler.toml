@@ -1,0 +1,7 @@
+name = "cnd-reportes"
+main = "worker.js"
+compatibility_date = "2026-09-01"
+
+[vars]
+# Cambia esto por la dirección de tu página de GitHub Pages (sin "/" al final)
+ALLOWED_ORIGIN = "https://jerez129.github.io"
