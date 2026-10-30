@@ -98,5 +98,7 @@ Los códigos de KPIs, reuniones, herramientas y usuarios se sacaron de DPO el 29
 
 ## Notas
 
+- Al cambiar `config.js`, `app.js`, `styles.css` o los `data/casos-*.js`, sube el número `?v=` en `index.html` (y en `dpo.html` para `styles.css`). Así el navegador no mezcla archivos nuevos con viejos de su caché.
+
 - Las exportaciones de los Forms tienen datos personales: **no las guardes en esta carpeta** (el `.gitignore` excluye `.xlsx` y `.csv`).
 - Las URL de los formularios y los IDs de las preguntas quedan visibles en el repositorio público.

@@ -320,7 +320,8 @@
   function construirRespuestas() {
     const c = cfg();
     const q = c.preguntas;
-    const v = (n) => ($(n).value || "").trim();
+    // Tolera campos que no existan (p. ej. un index.html viejo en caché del navegador)
+    const v = (n) => (($(n) && $(n).value) || "").trim();
     const area = $("area").value;
     const centro = CONFIG.centro;
     const respuestas = [];
@@ -437,7 +438,7 @@
   }
 
   function limpiarAnalisis() {
-    ["descripcion", "resultado", "resultadoRuta", "ruta", "chofer", "pregunta"].forEach((n) => { $(n).value = ""; });
+    ["descripcion", "resultado", "resultadoRuta", "ruta", "chofer", "pregunta"].forEach((n) => { if ($(n)) $(n).value = ""; });
     borrarAnalisis();
     actualizarSugerencias();
   }
