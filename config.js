@@ -18,8 +18,9 @@ window.CONFIG = {
     relatos: {
       nombre: "Relatos de Anomalía",
       campos: ["fecha", "responsable", "area", "indicador", "resultado", "descripcion", "resultadoRuta", "ruta", "cronica"],
-      // Igual que en el Forms: los porqués 4 y 5, Resultado, Resultado Ruta y Ruta son opcionales
-      obligatorios: ["fecha", "responsable", "area", "indicador",
+      // Igual que en el Forms: los porqués 4 y 5, Resultado Ruta y Ruta son opcionales.
+      // Resultado es opcional en el Forms, pero en Bávaro los 287 relatos lo traen (exportación 21/10/2026).
+      obligatorios: ["fecha", "responsable", "area", "indicador", "resultado",
         "porque0", "porque1", "porque2", "causaRaiz", "cronica", "accionCorrectiva"],
       // "Resultado" es el valor del indicador ese día; la descripción solo sirve para buscar casos
       etiquetas: { descripcion: "Describe en una línea lo que ocurrió (solo para buscar casos, no se envía)" },
