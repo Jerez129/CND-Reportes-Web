@@ -17,11 +17,12 @@ window.CONFIG = {
   formularios: {
     relatos: {
       nombre: "Relatos de Anomalía",
-      campos: ["fecha", "responsable", "area", "indicador", "descripcion", "resultadoRuta", "ruta", "cronica"],
+      campos: ["fecha", "responsable", "area", "indicador", "resultado", "descripcion", "resultadoRuta", "ruta", "cronica"],
       // Igual que en el Forms: los porqués 4 y 5, Resultado, Resultado Ruta y Ruta son opcionales
       obligatorios: ["fecha", "responsable", "area", "indicador",
         "porque0", "porque1", "porque2", "causaRaiz", "cronica", "accionCorrectiva"],
-      etiquetas: { descripcion: "Resultado: describe en una línea lo que ocurrió" },
+      // "Resultado" es el valor del indicador ese día; la descripción solo sirve para buscar casos
+      etiquetas: { descripcion: "Describe en una línea lo que ocurrió (solo para buscar casos, no se envía)" },
 
       // Pregunta "Responsable -DOA8" (la de Bávaro). Ordenados por uso en Bávaro (abr–oct 2026).
       responsable: {

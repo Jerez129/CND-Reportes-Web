@@ -333,7 +333,7 @@
       agregar(c.responsable.pregunta, $("responsable").value);
       agregar(q.area, area);
       agregar(indicadoresDeArea(area).pregunta, $("indicador").value);
-      agregar(q.resultado, v("descripcion"));
+      agregar(q.resultado, v("resultado"));
       agregar(q.resultadoRuta, v("resultadoRuta"));
       agregar(q.ruta, v("ruta"));
       q.porques.forEach((id, n) => agregar(id, v(`porque${n}`)));
@@ -437,7 +437,7 @@
   }
 
   function limpiarAnalisis() {
-    ["descripcion", "resultadoRuta", "ruta", "chofer", "pregunta"].forEach((n) => { $(n).value = ""; });
+    ["descripcion", "resultado", "resultadoRuta", "ruta", "chofer", "pregunta"].forEach((n) => { $(n).value = ""; });
     borrarAnalisis();
     actualizarSugerencias();
   }
