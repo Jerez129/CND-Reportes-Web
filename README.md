@@ -73,6 +73,29 @@ Cada caso es una línea con 7 textos: `[1.er porqué, 2.º, 3.º, 4.º, 5.º, ca
 - **5XQ:** hay una sola lista de indicadores. El supervisor es texto libre. "Pregunta" es obligatoria en el Forms, pero aquí es opcional: en Bávaro 341 de 348 envíos llegaron sin ella y el Forms los aceptó.
 - `masUsados` pone primero los indicadores que más se usan en Bávaro (abril–octubre 2026).
 
+## Plan de acción en DPO Evolution
+
+Después de enviar un reporte aparece **Copiar plan para DPO**. El plan se crea en DPO con el marcador **Crear en DPO** (instrucciones en `dpo.html`):
+
+```
+Reportes CND → (portapapeles) → marcador en dpo.arvolution.com → CreateEditActionLog
+```
+
+La página no puede crear la acción directo: DPO solo acepta la sesión de quien está dentro de `dpo.arvolution.com`. Por eso el marcador carga `dpo/crear-en-dpo.js` dentro de DPO, muestra una vista previa que se puede corregir y crea **una** acción en estado `OPEN`. Nunca cierra ni cambia acciones existentes.
+
+| Campo en DPO | Sale de |
+|---|---|
+| Acción (`description`) | Acción correctiva |
+| Nota (`note`) | Causa raíz, reporte, fecha, área e indicador |
+| KPI (`KPIs`) | `dpo.kpiPorIndicador` en `config.js` (si falta, se elige en la vista previa) |
+| Pilar (`pillar`) | `dpo.pilarPorArea` |
+| Herramienta de gestión (`managementTool`) | 5XQ → `1` (5 porqués), Relatos → `4` (Reporte de Anomalía) |
+| Reunión (`meeting`) | `dpo.reunion` (Diaria Logística) |
+| Dueño y responsables | Responsable (Relatos) o supervisor (5XQ), con `dpo.personas`; si no está, se busca por nombre |
+| Fecha límite (`endDate`) | Hoy + `dpo.plazoDias` (14) |
+
+Los códigos de KPIs, reuniones, herramientas y usuarios se sacaron de DPO el 29/10/2026.
+
 ## Notas
 
 - Las exportaciones de los Forms tienen datos personales: **no las guardes en esta carpeta** (el `.gitignore` excluye `.xlsx` y `.csv`).

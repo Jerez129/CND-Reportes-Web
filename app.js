@@ -357,6 +357,68 @@
     return respuestas;
   }
 
+  // ---------- Plan de acción para DPO ----------
+
+  const planDpo = document.getElementById("planDpo");
+  const planEstado = document.getElementById("planEstado");
+  const planTexto = document.getElementById("planTexto");
+  let planActual = null;
+
+  // Se arma al enviar, antes de limpiar el análisis. Lo lee el marcador "Crear en DPO".
+  function construirPlan() {
+    const d = CONFIG.dpo;
+    const v = (n) => ($(n).value || "").trim();
+    const area = $("area").value;
+    const indicador = $("indicador").value.trim();
+    const persona = formKey === "relatos" ? $("responsable").value : v("supervisor");
+    const reporte = cfg().nombre;
+    return {
+      tipo: "cnd-plan-dpo",
+      v: 1,
+      reporte,
+      fecha: v("fecha"),
+      area,
+      indicador,
+      description: v("accionCorrectiva"),
+      note: `Causa raíz: ${v("causaRaiz")}\nOrigen: ${reporte} del ${v("fecha")} · ${area} · ${indicador}`,
+      KPIs: d.kpiPorIndicador[`${area}|${indicador}`] || d.kpiPorIndicador[indicador] || "",
+      pillar: d.pilarPorArea[area] || "",
+      managementTool: d.herramienta[formKey],
+      meeting: d.reunion,
+      location: d.location,
+      ownerNombre: persona,
+      owner: d.personas[persona] || "",
+      plazoDias: d.plazoDias
+    };
+  }
+
+  function mostrarPlan(plan) {
+    planActual = plan;
+    planTexto.hidden = true;
+    planEstado.textContent = "";
+    planEstado.className = "estado";
+    document.getElementById("planResumen").textContent =
+      `«${plan.description}» · ${plan.reporte} · ${plan.indicador}. Cópialo y, con DPO abierto, usa el marcador «Crear en DPO».`;
+    planDpo.hidden = false;
+  }
+
+  document.getElementById("copiarPlan").addEventListener("click", async () => {
+    if (!planActual) return;
+    const texto = JSON.stringify(planActual);
+    try {
+      await navigator.clipboard.writeText(texto);
+      planEstado.textContent = "✅ Copiado. Abre DPO y da clic en el marcador «Crear en DPO».";
+      planEstado.className = "estado ok";
+    } catch {
+      // Sin permiso para el portapapeles (p. ej. abriendo el archivo local): copiar a mano
+      planTexto.value = texto;
+      planTexto.hidden = false;
+      planTexto.select();
+      planEstado.textContent = "No se pudo copiar solo. Copia el texto de abajo con Ctrl+C.";
+      planEstado.className = "estado error";
+    }
+  });
+
   function mostrarEstado(texto, tipo) {
     estadoEl.textContent = texto;
     estadoEl.className = "estado " + (tipo || "");
@@ -382,10 +444,12 @@
     if (!validar()) return;
 
     const cuerpo = { formulario: formKey, answers: construirRespuestas() };
+    const plan = construirPlan();
 
     if (modoPrueba) {
       payloadEl.textContent = JSON.stringify(cuerpo, null, 2);
       vistaPrevia.hidden = false;
+      mostrarPlan(plan);
       mostrarEstado("Modo prueba: revisa abajo lo que se enviaría. No se envió nada.", "ok");
       return;
     }
@@ -402,6 +466,7 @@
       const texto = await resp.text();
       if (!resp.ok) throw new Error(`${resp.status} ${texto}`.trim());
       mostrarEstado(`✅ ${cfg().nombre} enviado. Puedes llenar el siguiente.`, "ok");
+      mostrarPlan(plan);
       recordarEnvio(casosActuales[casoElegido],
         [0, 1, 2, 3, 4].map((n) => $(`porque${n}`).value.trim()), $("causaRaiz").value.trim());
       limpiarAnalisis();
@@ -419,6 +484,7 @@
     if (b.dataset.form === formKey) return;
     formKey = b.dataset.form;
     vistaPrevia.hidden = true;
+    planDpo.hidden = true;
     mostrarEstado("");
     aplicarFormulario();
   }));

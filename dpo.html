@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Subir planes a DPO</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .marcador { display: inline-block; padding: 10px 18px; border-radius: 8px; background: var(--acento);
+      color: var(--acento-texto); font-weight: 600; text-decoration: none; cursor: grab; }
+    ol li { margin-bottom: 6px; }
+  </style>
+</head>
+<body>
+  <header class="barra">
+    <h1>Subir planes a DPO</h1>
+    <span class="centro">DC Bávaro</span>
+  </header>
+
+  <main>
+    <section class="tarjeta">
+      <h2>1. Instala el marcador (una sola vez)</h2>
+      <p>Muestra la barra de marcadores con <strong>Ctrl+Shift+B</strong> y <strong>arrastra</strong> este botón hasta ella:</p>
+      <p><a id="marcador" class="marcador" href="#">Crear en DPO</a></p>
+      <p class="ayuda">Si no puedes arrastrarlo: crea un marcador nuevo, ponle de nombre «Crear en DPO» y en la URL pega este texto:</p>
+      <textarea id="codigo" rows="3" readonly></textarea>
+    </section>
+
+    <section class="tarjeta">
+      <h2>2. Cada vez que envíes un reporte</h2>
+      <ol>
+        <li>En <a href="index.html">Reportes CND</a>, envía el 5XQ o el Relato y da clic en <strong>Copiar plan para DPO</strong>.</li>
+        <li>Abre <a href="https://dpo.arvolution.com/actionlogs" target="_blank" rel="noopener">DPO Evolution</a> con tu sesión.</li>
+        <li>Da clic en el marcador <strong>Crear en DPO</strong>. Si el navegador pregunta si DPO puede leer el portapapeles, acepta (o pega el plan a mano).</li>
+        <li>Revisa la acción, el KPI, el pilar, la herramienta de gestión, la reunión, el dueño, los responsables y la fecha límite. Corrige lo que haga falta.</li>
+        <li>Da clic en <strong>Crear acción</strong>. La acción queda en <strong>Abierto</strong>.</li>
+      </ol>
+      <p class="ayuda">El marcador solo crea una acción a la vez, a tu nombre, y nunca cierra ni cambia acciones existentes.</p>
+    </section>
+  </main>
+
+  <script>
+    // El marcador carga el script desde donde esté publicada esta página
+    const url = new URL("dpo/crear-en-dpo.js", location.href).href;
+    const codigo = "javascript:(()=>{if(location.hostname!=='dpo.arvolution.com'){alert('Abre DPO Evolution y usa el marcador ahí.');return}" +
+      "const s=document.createElement('script');s.src='" + url + "?v='+Date.now();document.head.appendChild(s)})()";
+    document.getElementById("marcador").href = codigo;
+    document.getElementById("codigo").value = codigo;
+    document.getElementById("marcador").addEventListener("click", (e) => {
+      e.preventDefault();
+      alert("Arrástralo a la barra de marcadores; aquí no hace nada.");
+    });
+  </script>
+</body>
+</html>

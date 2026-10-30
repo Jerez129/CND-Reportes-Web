@@ -131,5 +131,79 @@ window.CONFIG = {
         pregunta: "r4252eb83554c45c0a0ac132b3849bffe"
       }
     }
+  },
+
+  // Plan de acción para DPO Evolution (dpo.arvolution.com).
+  // La página solo prepara el plan; lo crea el marcador "Crear en DPO" (dpo/crear-en-dpo.js)
+  // desde DPO, con la sesión de quien lo usa. Todo se puede corregir en la vista previa.
+  // Códigos sacados de DPO el 29/10/2026.
+  dpo: {
+    location: "dc-bavaro",
+    plazoDias: 14, // fecha límite sugerida
+    reunion: "logistics-daily-4fa5ds59", // Diaria Logística
+
+    // Herramienta de gestión (id de getAllManagementTool)
+    herramienta: { relatos: "4", x5q: "1" }, // 4 = Reporte de Anomalía, 1 = 5 porqués
+
+    pilarPorArea: { "Distribución": "DISTRIBUTION", "Almacén": "WAREHOUSE", "Control": "WAREHOUSE", "ADF": "FLEET" },
+
+    // Indicador (sin espacios al final) → KPI de DPO. Primero se busca "Área|Indicador".
+    // Si un indicador no está aquí, se elige el KPI en la vista previa.
+    kpiPorIndicador: {
+      // Relatos
+      "Devolución Hectolitros": "DEVOLUCIÓN",
+      "Devolución facturas": "DEVOLUCIÓN",
+      "Devolución Salvadas": "DEVOLUCIÓN",
+      "Modulacion de la devolucion": "EFECTIVIDAD_DE_MODULACIÓN",
+      "TML": "TML",
+      "Tiempo en ruta": "HORAS CALLE",
+      "Tiempo interno": "TIEMPO_INTERNO",
+      "% Rutas SIF": "RUTA_SIF",
+      "Exceso de Jornada": "JORNADA_LABORAL",
+      "Dispersion KM": "DESVIACIÓN_DE_DISTANCIA_KM",
+      "Ocupación": "CAPACITY_OCUPATION",
+      "Distribución|Roturas": "ROTURA_DE_BOTELLAS",
+      "Almacén|Roturas": "ROTURAS_EN_ALMACEN",
+      "Control|Roturas": "ROTURAS_EN_ALMACEN",
+      "Productividad picking": "PRODUCTIVIDAD_DE_PICKING",
+      "Reempaque": "PRODUCTIVIDAD_DE_REEMPAQUE",
+      "Carga de camiones": "PRODUCTIVIDAD_DE_CARGA",
+      "Exactitud de Inventario": "PRECISION_DE_INVENTARIO",
+      "Rescate": "RESCATE_EN_RUTA",
+      "Neumático": "RENDIMIENTO_DE_NEUMATICOS",
+      "Mantenimiento Correctivo": "MANTENIMIENTO",
+      "Mantenimiento Preventivo": "MANTENIMIENTO",
+      "Pre-Uso Camion T2": "EFECTIVIDAD_CHECKLIST_T2",
+      "Post-Uso Camion T2": "EFECTIVIDAD_CHECKLIST_T2",
+      "Pre-Uso Montacargas": "EFECTIVIDAD_CHECKLIST_FLT",
+      "Pots-Uso Montacargas": "EFECTIVIDAD_CHECKLIST_FLT",
+      // 5XQ
+      "Tiempo medio liberación (TML)": "TML",
+      "Ruta SIF": "RUTA_SIF",
+      "Desviación KM": "DESVIACIÓN_DE_DISTANCIA_KM",
+      "Rotura distribución": "ROTURA_DE_BOTELLAS",
+      "Rotura almacén": "ROTURAS_EN_ALMACEN",
+      "Devolución Facturas": "DEVOLUCIÓN",
+      "Efectividad modulación": "EFECTIVIDAD_DE_MODULACIÓN",
+      "Carga de Camiones": "PRODUCTIVIDAD_DE_CARGA",
+      "Productividad de Picking": "PRODUCTIVIDAD_DE_PICKING",
+      "Productividad de Sorting": "PRODUCTIVIDAD_DE_SELECCION",
+      "Productividad de Reempaque": "PRODUCTIVIDAD_DE_REEMPAQUE",
+      "Edad de Productos (Frescura)": "FRESCURA",
+      "Ocupacion Almacen": "UTILIZACION_DE_ALMACEN",
+      "Ausentismo": "AUSENTISMO",
+      "Diferencia de Inventario": "INVENTORY_DIFFERENCES",
+      "Conteo inventario": "PRECISION_DE_INVENTARIO",
+      "Pre-post uso de MC": "EFECTIVIDAD_CHECKLIST_FLT"
+    },
+
+    // Responsable (Relatos) o supervisor (5XQ) → usuario de DPO.
+    // Los que no están aquí se buscan por nombre en la vista previa.
+    personas: {
+      "Luis Eduardo": "luis-eduardo-rosario-mordan-goejvigh",
+      "Luis Rosario": "luis-eduardo-rosario-mordan-goejvigh",
+      "Freyky Reyes": "freyky-reyes-mercedes-g8s89ez3",
+      "Gregori Agramonte": "gregori-jhasmel-agramonte-luiek6fn"
+    }
   }
 };
