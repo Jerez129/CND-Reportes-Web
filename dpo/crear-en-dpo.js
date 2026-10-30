@@ -71,7 +71,12 @@
       .primario { border: 0; background: #b3121f; color: #fff; }
       .primario:disabled { opacity: .55; cursor: wait; }
       .secundario { border: 1px solid #d8dce3; background: #fff; color: inherit; }
+      .accion { margin: 6px 0 4px; font-size: 1rem; font-weight: 600; }
+      .detalle { margin: 0; color: #5d6677; }
+      .pregunta { margin: 16px 0 0; font-weight: 600; }
+      .enlace { margin-right: auto; border: 0; background: none; color: #b3121f; text-decoration: underline; padding-left: 0 !important; }
       .estado { margin: 12px 0 0; font-size: .9rem; }
+      .estado:empty { display: none; }
       .ok { color: #1d7a3e; } .error { color: #b3261e; }
       [hidden] { display: none !important; }
     </style>
@@ -85,6 +90,17 @@
             <textarea id="pegado" rows="4"></textarea></label>
           <div class="botones"><button type="button" class="secundario" data-cerrar>Cancelar</button>
             <button type="button" class="primario" id="usarPegado">Continuar</button></div>
+        </div>
+
+        <div id="resumen" hidden>
+          <p class="accion" id="resAccion"></p>
+          <p class="detalle" id="resDetalle"></p>
+          <p class="pregunta">¿Crear esta acción en DPO?</p>
+          <p class="estado" id="resEstado" role="status"></p>
+          <div class="botones">
+            <button type="button" class="enlace" id="editar">Editar detalles</button>
+            <button type="button" class="secundario" data-cerrar>No</button>
+            <button type="button" class="primario" id="si">Sí</button></div>
         </div>
 
         <form id="form" hidden>
@@ -120,8 +136,9 @@
     if (e.key === "Enter" && e.target.tagName === "INPUT") e.preventDefault();
   });
 
+  // Los mensajes salen en el resumen o en el formulario, según cuál se ve
   function estado(texto, tipo) {
-    const el = $("estado");
+    const el = $("form").hidden ? $("resEstado") : $("estado");
     el.textContent = texto;
     el.className = "estado " + (tipo || "");
   }
@@ -243,8 +260,7 @@
   async function mostrarFormulario(p) {
     plan = p;
     $("pegar").hidden = true;
-    $("origen").textContent = `${p.reporte} del ${p.fecha} · ${p.area} · ${p.indicador}. Revisa todo antes de crear.`;
-    $("form").hidden = false;
+    $("origen").textContent = `${p.reporte} del ${p.fecha} · ${p.area} · ${p.indicador}`;
     $("description").value = p.description || "";
     $("note").value = p.note || "";
     llenar($("pillar"), PILARES, p.pillar, "Elige el pilar…");
@@ -252,7 +268,10 @@
     fin.setDate(fin.getDate() + (Number(p.plazoDias) || 14));
     $("endDate").value = fin.toLocaleDateString("en-CA");
     pintarPersonas();
-    estado("Cargando listas de DPO…");
+    $("resumen").hidden = false;
+    $("resAccion").textContent = p.description || "";
+    $("resDetalle").textContent = "Cargando datos de DPO…";
+    $("si").disabled = true;
 
     try {
       const [k, h, r] = await Promise.all([
@@ -265,14 +284,48 @@
       llenar($("managementTool"), (h.getAllManagementTool || []).map((x) => [String(x.id), x.esTitle || x.slug]),
         String(p.managementTool || ""), "Sin herramienta");
       llenar($("meeting"), (r.getRoutinesAvailable || []).map((x) => [x.slug, x.name]), p.meeting, "Elige la reunión…");
-      estado("");
     } catch (e) {
-      estado("No se pudieron cargar las listas de DPO: " + e.message + ". ¿Tienes la sesión abierta?", "error");
-      $("crear").disabled = true;
+      $("resDetalle").textContent = "";
+      estado("No se pudieron cargar los datos de DPO: " + e.message + ". ¿Tienes la sesión abierta?", "error");
       return;
     }
-    sugerirDueno();
+    await sugerirDueno();
+
+    // Con todo lleno basta con Sí / No; si falta algo, se abre el formulario completo
+    const texto = (id) => $(id).selectedOptions[0] ? $(id).selectedOptions[0].textContent : "";
+    if (!faltantes().length) {
+      const [a, m, d] = $("endDate").value.split("-");
+      $("resDetalle").textContent = [`KPI: ${texto("KPIs")}`, `Dueño: ${owner.name}`, `Vence: ${d}/${m}/${a}`,
+        texto("managementTool")].join(" · ");
+      $("si").disabled = false;
+      $("si").focus();
+    } else {
+      editar();
+      estado("Completa lo marcado en rojo (no tiene valor automático).", "error");
+      faltantes();
+    }
   }
+
+  // Campos obligatorios vacíos; los marca en rojo solo si el formulario se ve
+  function faltantes() {
+    const faltan = [];
+    const revisar = (id, ok) => { $(id).classList.toggle("falta", !ok && !$("form").hidden); if (!ok) faltan.push(id); };
+    revisar("description", $("description").value.trim());
+    revisar("KPIs", $("KPIs").value);
+    revisar("pillar", $("pillar").value);
+    revisar("meeting", $("meeting").value);
+    revisar("endDate", $("endDate").value);
+    revisar("buscarOwner", owner);
+    return faltan;
+  }
+
+  function editar() {
+    $("resumen").hidden = true;
+    $("form").hidden = false;
+  }
+
+  $("editar").addEventListener("click", editar);
+  $("si").addEventListener("click", () => $("form").requestSubmit());
 
   $("usarPegado").addEventListener("click", () => {
     const p = interpretar($("pegado").value);
@@ -285,15 +338,7 @@
     e.preventDefault();
     if (creando) return; // evita crear dos veces
 
-    const faltan = [];
-    const revisar = (id, ok) => { $(id).classList.toggle("falta", !ok); if (!ok) faltan.push(id); };
-    revisar("description", $("description").value.trim());
-    revisar("KPIs", $("KPIs").value);
-    revisar("pillar", $("pillar").value);
-    revisar("meeting", $("meeting").value);
-    revisar("endDate", $("endDate").value);
-    revisar("buscarOwner", owner);
-    if (faltan.length) { estado("Completa los campos marcados en rojo.", "error"); return; }
+    if (faltantes().length) { editar(); faltantes(); estado("Completa los campos marcados en rojo.", "error"); return; }
 
     const ahora = new Date();
     const [a, m, d] = $("endDate").value.split("-").map(Number);
@@ -319,18 +364,18 @@
     };
 
     creando = true;
-    $("crear").disabled = true;
+    $("crear").disabled = $("si").disabled = true;
     estado("Creando la acción…");
     try {
       const data = await gql("CreateEditActionLog", Q.crear, { payload });
       if (!data || !data.createEditActionLog || !data.createEditActionLog.isSuccess) throw new Error("DPO no confirmó la creación");
       estado("✅ Acción creada en DPO. Recarga el tablero para verla.", "ok");
-      $("crear").hidden = true;
+      $("crear").hidden = $("si").hidden = $("editar").hidden = true;
       raiz.querySelectorAll("[data-cerrar]").forEach((b) => { b.textContent = "Cerrar"; });
     } catch (err) {
       estado("❌ No se creó: " + err.message, "error");
       creando = false;
-      $("crear").disabled = false;
+      $("crear").disabled = $("si").disabled = false;
     }
   });
 

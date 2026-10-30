@@ -399,24 +399,27 @@
     planTexto.hidden = true;
     planEstado.textContent = "";
     planEstado.className = "estado";
-    document.getElementById("planResumen").textContent =
-      `«${plan.description}» · ${plan.reporte} · ${plan.indicador}. Cópialo y, con DPO abierto, usa el marcador «Crear en DPO».`;
+    document.getElementById("planResumen").textContent = `«${plan.description}» · ${plan.reporte} · ${plan.indicador}`;
     planDpo.hidden = false;
   }
 
+  document.getElementById("noPlan").addEventListener("click", () => { planDpo.hidden = true; });
+
+  // Sí: copia el plan y abre DPO; ahí se termina con el favorito «Crear en DPO»
   document.getElementById("copiarPlan").addEventListener("click", async () => {
     if (!planActual) return;
     const texto = JSON.stringify(planActual);
     try {
       await navigator.clipboard.writeText(texto);
-      planEstado.textContent = "✅ Copiado. Abre DPO y da clic en el marcador «Crear en DPO».";
+      window.open("https://dpo.arvolution.com/actionlogs", "_blank", "noopener");
+      planEstado.textContent = "✅ Listo. En la pestaña de DPO da clic en el favorito «Crear en DPO».";
       planEstado.className = "estado ok";
     } catch {
       // Sin permiso para el portapapeles (p. ej. abriendo el archivo local): copiar a mano
       planTexto.value = texto;
       planTexto.hidden = false;
       planTexto.select();
-      planEstado.textContent = "No se pudo copiar solo. Copia el texto de abajo con Ctrl+C.";
+      planEstado.textContent = "No se pudo copiar solo. Copia el texto de abajo con Ctrl+C, abre DPO y da clic en el favorito «Crear en DPO».";
       planEstado.className = "estado error";
     }
   });

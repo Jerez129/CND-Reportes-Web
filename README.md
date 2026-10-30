@@ -75,13 +75,13 @@ Cada caso es una línea con 7 textos: `[1.er porqué, 2.º, 3.º, 4.º, 5.º, ca
 
 ## Plan de acción en DPO Evolution
 
-Después de enviar un reporte aparece **Copiar plan para DPO**. El plan se crea en DPO con el marcador **Crear en DPO** (instrucciones en `dpo.html`):
+Después de enviar un reporte la página pregunta **¿Subir esta acción a DPO?** Con **Sí** copia el plan y abre DPO; ahí el favorito **Crear en DPO** muestra un resumen y crea la acción con otro **Sí** (instrucciones en `dpo.html`):
 
 ```
 Reportes CND → (portapapeles) → marcador en dpo.arvolution.com → CreateEditActionLog
 ```
 
-La página no puede crear la acción directo: DPO solo acepta la sesión de quien está dentro de `dpo.arvolution.com`. Por eso el marcador carga `dpo/crear-en-dpo.js` dentro de DPO, muestra una vista previa que se puede corregir y crea **una** acción en estado `OPEN`. Nunca cierra ni cambia acciones existentes.
+La página no puede crear la acción directo: DPO solo acepta la sesión de quien está dentro de `dpo.arvolution.com`. Por eso el marcador carga `dpo/crear-en-dpo.js` dentro de DPO, muestra un resumen (con «Editar detalles» para corregir) y crea **una** acción en estado `OPEN`. Nunca cierra ni cambia acciones existentes.
 
 | Campo en DPO | Sale de |
 |---|---|
