@@ -90,7 +90,7 @@ La página no puede crear la acción directo: DPO solo acepta la sesión de quie
 | KPI (`KPIs`) | `dpo.kpiPorIndicador` en `config.js` (si falta, se elige en la vista previa) |
 | Pilar (`pillar`) | `dpo.pilarPorArea` |
 | Herramienta de gestión (`managementTool`) | 5XQ → `1` (5 porqués), Relatos → `4` (Reporte de Anomalía) |
-| Reunión (`meeting`) | `dpo.reunion` (Diaria Logística) |
+| Reunión (`meeting`) | `dpo.reuniones`: Relatos → Diaria Logística; 5XQ Distribución → Matutina de Distribución; 5XQ Almacén → Cambio de turno almacén |
 | Dueño y responsables | Responsable (Relatos) o supervisor (5XQ), con `dpo.personas`; si no está, se busca por nombre |
 | Fecha límite (`endDate`) | Hoy + `dpo.plazoDias` (14) |
 

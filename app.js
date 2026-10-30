@@ -385,7 +385,7 @@
       KPIs: d.kpiPorIndicador[`${area}|${indicador}`] || d.kpiPorIndicador[indicador] || "",
       pillar: d.pilarPorArea[area] || "",
       managementTool: d.herramienta[formKey],
-      meeting: d.reunion,
+      meeting: formKey === "relatos" ? d.reuniones.relatos : (d.reuniones.x5q[area] || ""),
       location: d.location,
       ownerNombre: persona,
       owner,

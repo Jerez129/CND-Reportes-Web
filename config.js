@@ -140,7 +140,14 @@ window.CONFIG = {
   dpo: {
     location: "dc-bavaro",
     plazoDias: 14, // fecha límite sugerida
-    reunion: "logistics-daily-4fa5ds59", // Diaria Logística
+    // Reunión de DPO donde va la acción. 5XQ de "Otra area": se elige en la vista previa.
+    reuniones: {
+      relatos: "logistics-daily-4fa5ds59", // Diaria Logística (siempre)
+      x5q: {
+        "Distribución": "matutina-ditribucion-54342gds", // Matutina de Distribución
+        "Almacén": "cambio-de-turno-almacen-17979212" // Cambio de turno almacén
+      }
+    },
 
     // Herramienta de gestión (id de getAllManagementTool)
     herramienta: { relatos: "4", x5q: "1" }, // 4 = Reporte de Anomalía, 1 = 5 porqués
