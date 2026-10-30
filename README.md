@@ -46,11 +46,11 @@ Si `workerUrl` en `config.js` está vacío, o abres la página con `?prueba`, la
 
 ## Casos (`data/casos-*.js`)
 
-1,290 casos escritos para esta herramienta, tomando como referencia los problemas que aparecen en los Forms de todos los centros, pero **sin copiar ninguna respuesta real**. Los archivos `casos-samana-*.js` agregan 10 casos más a cada indicador, inspirados en los problemas que reporta DC Samaná (clientes sin dinero en zonas lejanas, mayoristas, botellas explotadas, bajo líquido, perfiles de patana, etc.). Reglas:
+3,100 casos (50 por indicador) escritos para esta herramienta, tomando como referencia los problemas que aparecen en los Forms de todos los centros, pero **sin copiar ninguna respuesta real**. Los archivos `casos-samana-*.js` agregan 10 casos más a cada indicador, inspirados en los problemas que reporta DC Samaná (clientes sin dinero en zonas lejanas, mayoristas, botellas explotadas, bajo líquido, perfiles de patana, etc.). Los archivos `casos-50-*.js` completan cada indicador hasta 50 casos. Reglas:
 
 - **Nada específico:** sin clientes, negocios, rutas, fichas, placas, códigos, personas ni cifras exactas. Lo único permitido son **nombres de productos** (Presidente, Brahma, Malta Morena…).
 - **Sin repetir:** dentro de cada indicador, cada caso tiene una causa raíz distinta.
-- **Cantidad por uso en Bávaro:** 30 casos en los más usados, 20 en los de uso medio y 15 en los de poco uso.
+- **50 casos por indicador:** los 62 indicadores (Relatos y 5XQ; los de 5XQ que son iguales a uno de Relatos comparten su lista).
 
 Cada lista usa **el nombre exacto del indicador en el Forms** (sin los espacios del final):
 
