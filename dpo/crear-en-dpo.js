@@ -213,11 +213,18 @@
   async function sugerirDueno() {
     if (!plan.ownerNombre) return;
     try {
-      const usuarios = await buscarUsuarios(plan.ownerNombre);
+      // DPO busca el texto tal cual ("Kervin Mercedes" no encuentra "Kervin Miguel Mercedes"),
+      // así que si no hay resultados se prueba solo con el primer nombre
+      let busqueda = plan.ownerNombre;
+      let usuarios = await buscarUsuarios(busqueda);
+      if (!usuarios.length && busqueda.includes(" ")) {
+        busqueda = busqueda.split(" ")[0];
+        usuarios = await buscarUsuarios(busqueda);
+      }
       const u = usuarios.find((x) => x.slug === plan.owner) || (!plan.owner && usuarios.length === 1 ? usuarios[0] : null);
       if (u) { owner = u; responsables = [u]; }
       else {
-        $("buscarOwner").value = plan.ownerNombre;
+        $("buscarOwner").value = busqueda;
         $("buscarOwner").dispatchEvent(new Event("input"));
       }
     } catch { /* se elige a mano */ }
