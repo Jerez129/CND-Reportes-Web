@@ -142,8 +142,11 @@
     } catch { return null; }
   }
 
+  // Si el navegador tarda en dar permiso, se ofrece pegar a mano mientras tanto
   async function leerPortapapeles() {
-    try { return interpretar(await navigator.clipboard.readText()); } catch { return null; }
+    const espera = new Promise((ok) => setTimeout(() => ok(null), 2500));
+    const lectura = navigator.clipboard.readText().then(interpretar, () => null);
+    return Promise.race([lectura, espera]);
   }
 
   // ---------- Personas ----------
@@ -320,6 +323,7 @@
   // ---------- Inicio ----------
 
   leerPortapapeles().then((p) => {
+    if (plan) return; // ya se pegó a mano
     if (p) { mostrarFormulario(p); return; }
     $("origen").textContent = "No encontré el plan en el portapapeles.";
     $("pegar").hidden = false;
