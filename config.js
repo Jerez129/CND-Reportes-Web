@@ -197,13 +197,17 @@ window.CONFIG = {
       "Pre-post uso de MC": "EFECTIVIDAD_CHECKLIST_FLT"
     },
 
-    // Responsable (Relatos) o supervisor (5XQ) → usuario de DPO.
+    // Responsable (Relatos) o supervisor (5XQ) → usuario de DPO: [código, nombre en DPO].
     // Los que no están aquí se buscan por nombre en la vista previa.
+    // Cuentas confirmadas por el usuario el 29/10/2026.
     personas: {
-      "Luis Eduardo": "luis-eduardo-rosario-mordan-goejvigh",
-      "Luis Rosario": "luis-eduardo-rosario-mordan-goejvigh",
-      "Freyky Reyes": "freyky-reyes-mercedes-g8s89ez3",
-      "Gregori Agramonte": "gregori-jhasmel-agramonte-luiek6fn"
+      "Luis Eduardo": ["luis-eduardo-rosario-mordan-goejvigh", "LUIS EDUARDO ROSARIO MORDAN"],
+      "Luis Rosario": ["luis-eduardo-rosario-mordan-goejvigh", "LUIS EDUARDO ROSARIO MORDAN"],
+      "Freyky Reyes": ["freyky-reyes-mercedes-g8s89ez3", "Freyky Reyes Mercedes"],
+      "Gregori Agramonte": ["gregori-jhasmel-agramonte-luiek6fn", "GREGORI JHASMEL AGRAMONTE"],
+      "Kervin Mercedes": ["kervin-migue-mercedez-60cjw4ts", "Kervin Migue Mercedez"],
+      "Carlos de la Cruz": ["carlos-german-lvnjb0cl", "CARLOS GERMAN"],
+      "Jorge Reyes": ["jorge-ramon-reyes-ramirez-th5eyadm", "JORGE RAMON REYES RAMIREZ"]
     }
   }
 };

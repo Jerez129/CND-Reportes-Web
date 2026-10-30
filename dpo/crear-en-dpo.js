@@ -211,6 +211,13 @@
 
   // Dueño sugerido: por su código de DPO, o buscando su nombre si hay un solo resultado
   async function sugerirDueno() {
+    // Código y nombre de DPO ya conocidos (config.js → dpo.personas): no hace falta buscar
+    if (plan.owner && plan.ownerDpo) {
+      owner = { slug: plan.owner, name: plan.ownerDpo };
+      responsables = [owner];
+      pintarPersonas();
+      return;
+    }
     if (!plan.ownerNombre) return;
     try {
       // DPO busca el texto tal cual ("Kervin Mercedes" no encuentra "Kervin Miguel Mercedes"),

@@ -372,6 +372,7 @@
     const indicador = $("indicador").value.trim();
     const persona = formKey === "relatos" ? $("responsable").value : v("supervisor");
     const reporte = cfg().nombre;
+    const [owner, ownerDpo] = d.personas[persona] || ["", ""];
     return {
       tipo: "cnd-plan-dpo",
       v: 1,
@@ -387,7 +388,8 @@
       meeting: d.reunion,
       location: d.location,
       ownerNombre: persona,
-      owner: d.personas[persona] || "",
+      owner,
+      ownerDpo,
       plazoDias: d.plazoDias
     };
   }
